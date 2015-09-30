@@ -1,0 +1,25 @@
+<ion-view view-title="Home">
+  <ion-content class="padding">
+    
+    <ion-list>
+      <ion-item>
+        <label>Lat: </label>
+        <textarea rows="1" cols="30" readonly>
+            {{position.coords.latitude}}
+        </textarea>
+      </ion-item>
+      <ion-item>
+        <label>Long: </label>
+        <textarea rows="1" cols="30" readonly>
+            {{position.coords.longitude}}
+        </textarea>
+      </ion-item>
+      
+    </ion-list>
+    
+    <button class="button button-block button-positive" ng-click="getLocation()">
+            Get GPS-Position
+    </button>
+
+  </ion-content>
+</ion-view>

@@ -1,0 +1,19 @@
+<ion-view view-title="Video">
+  <ion-content class="padding">
+  <b>read this = good </b>
+
+  <div class="list">
+    <div class="item item-divider">
+      <i class="ion-videocamera"></i>
+      Current clip
+    </div>
+      <img ng-src="{{urlForClipThumb(clip)}}" ng-click="showClip(clip)" style="height: 250px; width: 150px;"/>   
+  </div>
+
+
+   <button class="button button-block button-positive" ng-click="captureVideo()">
+    capture video
+   </button>
+
+  </ion-content>
+</ion-view>

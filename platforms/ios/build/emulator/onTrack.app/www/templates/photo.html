@@ -1,0 +1,18 @@
+<ion-view view-title="Photo">
+  <ion-content class="padding">
+
+    <img ng-show="imgSrc !== undefined" ng-src="{{imgSrc}}" align="right">
+    <img ng-show="imgSrc === undefined" ng-src="img/vault.gif">
+    
+    <button class="button button-block button-positive" ng-click="takePicture()">
+            Take a Picture
+    </button>
+
+    <ul class="list">
+      <li>
+    </ul>
+ 
+    
+
+  </ion-content>
+</ion-view>
