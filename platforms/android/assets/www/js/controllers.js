@@ -1,5 +1,5 @@
-angular.module('onTrack.controllers', ['ionic', 'ngCordova', 'opentok'])
-
+angular.module('onTrack.controllers', ['ionic', 'ngCordova'])
+/**
 .controller('VideoCtrl', ['$scope', 'OTSession', 'apiKey', 'sessionId', 'token', function($scope, OTSession, apiKey, sessionId, token) {
                 OTSession.init(apiKey, sessionId, token);
                 $scope.streams = OTSession.streams;
@@ -8,12 +8,11 @@ angular.module('onTrack.controllers', ['ionic', 'ngCordova', 'opentok'])
                 sessionId: '1_MX40NTM3NjEwMn5-MTQ0NTYyNTI2MjA4NH5pZ2d1RExwam4zNk9aL2psRk15Yk5QcVd-UH4',
                 token: 'T1==cGFydG5lcl9pZD00NTM3NjEwMiZzaWc9OWNlMDM4MjlkNDg4YzhhZWJmODJhM2I1YzdkNmQ4YTY2NTY0MGI0Njpyb2xlPXB1Ymxpc2hlciZzZXNzaW9uX2lkPTFfTVg0ME5UTTNOakV3TW41LU1UUTBOVFl5TlRJMk1qQTROSDVwWjJkMVJFeHdhbTR6Tms5YUwycHNSazE1WWs1UWNWZC1VSDQmY3JlYXRlX3RpbWU9MTQ0NTYyNTI4MSZub25jZT0wLjUxMzkwNjUyNDUzNjY3OTcmZXhwaXJlX3RpbWU9MTQ0NTY0Njg0NyZjb25uZWN0aW9uX2RhdGE9dGVzdA=='
             });
-
+*/
 
 .controller ('VideoCtrl', function($scope, TokBoxSettings, $ionicPopup) {
-   
-  document.addEventListener("deviceready", function () {
-      //IRGENDWANN KOMMT HIER MAL DER CODE HIN  
+ 
+  document.addEventListener("deviceready", function () {  
     var opentok = {
         config: undefined,
         session: undefined,
@@ -50,10 +49,12 @@ angular.module('onTrack.controllers', ['ionic', 'ngCordova', 'opentok'])
                 opentok.subscriber = undefined;
             }
         }
+      };
+    OT.setLogLevel(OT.DEBUG);
 
   }, false);
 })
-*/
+
 
 .controller ('PhotoCtrl', function($scope, $cordovaCamera) {
 
