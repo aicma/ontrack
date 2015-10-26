@@ -1,46 +1,59 @@
-angular.module('onTrack.controllers', ['ionic', 'ngCordova'])
+angular.module('onTrack.controllers', ['ionic', 'ngCordova', 'opentok'])
 
-/**
-  Empty Debug Controllers
-*/
-//.controller('VideoCtrl', function($scope) {})
+.controller('VideoCtrl', ['$scope', 'OTSession', 'apiKey', 'sessionId', 'token', function($scope, OTSession, apiKey, sessionId, token) {
+                OTSession.init(apiKey, sessionId, token);
+                $scope.streams = OTSession.streams;
+            }]).value({
+                apiKey: '45376102',
+                sessionId: '1_MX40NTM3NjEwMn5-MTQ0NTYyNTI2MjA4NH5pZ2d1RExwam4zNk9aL2psRk15Yk5QcVd-UH4',
+                token: 'T1==cGFydG5lcl9pZD00NTM3NjEwMiZzaWc9OWNlMDM4MjlkNDg4YzhhZWJmODJhM2I1YzdkNmQ4YTY2NTY0MGI0Njpyb2xlPXB1Ymxpc2hlciZzZXNzaW9uX2lkPTFfTVg0ME5UTTNOakV3TW41LU1UUTBOVFl5TlRJMk1qQTROSDVwWjJkMVJFeHdhbTR6Tms5YUwycHNSazE1WWs1UWNWZC1VSDQmY3JlYXRlX3RpbWU9MTQ0NTYyNTI4MSZub25jZT0wLjUxMzkwNjUyNDUzNjY3OTcmZXhwaXJlX3RpbWU9MTQ0NTY0Njg0NyZjb25uZWN0aW9uX2RhdGE9dGVzdA=='
+            });
 
-//.controller('PhotoCtrl', function($scope) {})
 
-///////////////////////////////////////////////////////
-
-.controller ('VideoCtrl', function($scope, $cordovaCapture, VideoService) {
+.controller ('VideoCtrl', function($scope, TokBoxSettings, $ionicPopup) {
    
+  document.addEventListener("deviceready", function () {
+      //IRGENDWANN KOMMT HIER MAL DER CODE HIN  
+    var opentok = {
+        config: undefined,
+        session: undefined,
+        publisher: undefined,
+        subscriber: undefined,
+        isSubscribing: false,
 
-    $scope.captureVideo = function() {
-      var options = { limit: 1, duration: 15 };
+        initializePublisher: function() {
+            opentok.publisher = OT.initPublisher('publisher');
+        },
 
-      $cordovaCapture.captureVideo(options).then(function(videoData) {
-        VideoService.saveVideo(videoData).success(function(data) {
-          $scope.clip = data;
-          $scope.$apply();
-        }).error(function(data){
-          console.log('ERROR: ' + data);
-        })
-      , function(err) {
-          console.log(err.message);
+        initializeSession: function() {
+            opentok.session = OT.initSession(TokBoxSettings.apiKey, TokBoxSettings.sessionId);
+            opentok.session.on('streamCreated', opentok.onStreamCreated);
+            opentok.session.on('streamDestroyed', opentok.onStreamDestroyed);
+            opentok.session.connect(TokBoxSettings.token, opentok.onSessionConnected);
+        },
+
+        onSessionConnected: function(event) {
+            opentok.session.publish(opentok.publisher);
+        },
+
+        onStreamCreated: function(event) {
+            if (!opentok.isSubscribing) {
+                opentok.subscriber = opentok.session.subscribe(event.stream, 'subscriber');
+                opentok.isSubscribing = true;
+            }
+        },
+
+        onStreamDestroyed: function(event) {
+            if (opentok.isSubscribing && event.stream.streamId === opentok.subscriber.stream.streamId) {
+                opentok.session.unsubscribe(opentok.subscriber);
+                opentok.isSubscribing = false;
+                opentok.subscriber = undefined;
+            }
         }
-      });
-    }
 
-    $scope.urlForClipThumb = function(clipUrl) {
-      var name = clipUrl.substr(clipUrl.lastIndexOf('/') + 1);
-      var trueOrigin = cordova.file.dataDirectory + name;
-      var sliced = trueOrigin.slice(0, -4);
-      return sliced + '.png';
-    }
-     
-    $scope.showClip = function(clip) {
-      console.log('show clip: ' + clip);
-    }
-
+  }, false);
 })
-
+*/
 
 .controller ('PhotoCtrl', function($scope, $cordovaCamera) {
 
@@ -60,10 +73,10 @@ angular.module('onTrack.controllers', ['ionic', 'ngCordova'])
         };
 
         $scope.takePicture = function() {
-        $cordovaCamera.getPicture(options).then(function(imageData) {
+          $cordovaCamera.getPicture(options).then(function(imageData) {
           $scope.imgSrc = "data:image/jpeg;base64," + imageData;
           }, function(err) {
-                console.log(err);
+                //do ERROR stuff
           });
         }
 
@@ -92,6 +105,5 @@ angular.module('onTrack.controllers', ['ionic', 'ngCordova'])
           })
       });
     }
-
   }, false);
 });

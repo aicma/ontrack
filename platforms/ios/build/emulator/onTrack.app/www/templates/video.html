@@ -2,17 +2,14 @@
   <ion-content class="padding">
   <b>read this = good </b>
 
-  <div class="list">
-    <div class="item item-divider">
-      <i class="ion-videocamera"></i>
-      Current clip
-    </div>
-      <img ng-src="{{urlForClipThumb(clip)}}" ng-click="showClip(clip)" style="height: 250px; width: 150px;"/>   
-  </div>
+    <p>Publisher:</p>
+    <div id="publisher"></div>
+    <p>Subscriber:</p>
+    <div id="subscriber"></div>
 
 
-   <button class="button button-block button-positive" ng-click="captureVideo()">
-    capture video
+   <button class="button button-block button-positive" ng-click="startStream()">
+    START STREAM
    </button>
 
   </ion-content>

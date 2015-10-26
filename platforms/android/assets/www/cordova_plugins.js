@@ -295,7 +295,8 @@ module.exports.metadata =
     "org.apache.cordova.file": "1.3.3",
     "org.apache.cordova.media-capture": "0.3.6",
     "cordova-plugin-x-toast": "2.2.0",
-    "org.apache.cordova.geolocation": "0.3.12"
+    "org.apache.cordova.geolocation": "0.3.12",
+    "com.tokbox.cordova.opentok": "1.0.3"
 }
 // BOTTOM OF METADATA
 });
